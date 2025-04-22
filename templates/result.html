@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delay Prediction Result - Flight Delay Prediction System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flight Delay Prediction System</h1>
+            <p>Your prediction results</p>
+        </header>
+
+        <main>
+            <section class="prediction-result">
+                <div class="result-header">
+                    <h2>Prediction Result</h2>
+                    <a href="/" class="btn-back">New Prediction</a>
+                </div>
+
+                <div class="result-card">
+                    <div class="flight-info">
+                        <div class="flight-route">
+                            <span class="airport">{{ features.origin }}</span>
+                            <span class="arrow">→</span>
+                            <span class="airport">{{ features.dest }}</span>
+                        </div>
+                        <div class="carrier-info">
+                            <span class="carrier-code">{{ features.carrier }}</span>
+                        </div>
+                    </div>
+
+                    <div class="prediction-details">
+                        <div class="prediction-value">
+                            <h3>Predicted Delay</h3>
+                            <div class="delay-time {% if prediction.delay > 30 %}high-delay{% elif prediction.delay > 15 %}medium-delay{% else %}low-delay{% endif %}">
+                                {{ prediction.delay }} minutes
+                            </div>
+                        </div>
+
+                        <div class="confidence-meter">
+                            <h3>Confidence Level</h3>
+                            <div class="confidence-bar">
+                                <div class="confidence-level" style="width: 85%;"></div>
+                            </div>
+                            <span class="confidence-text">85% confidence</span>
+                        </div>
+                    </div>
+
+                    <div class="factors-section">
+                        <h3>Key Factors Affecting This Prediction</h3>
+                        <ul class="factors-list">
+                            {% for factor in prediction.factors %}
+                            <li>{{ factor }}</li>
+                            {% else %}
+                            <li>No significant delay factors identified.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="additional-details">
+                        <h3>Flight Details</h3>
+                        <table class="details-table">
+                            <tr>
+                                <th>Carrier:</th>
+                                <td>{{ features.carrier }}</td>
+                                <th>Distance:</th>
+                                <td>{{ features.distance }} miles</td>
+                            </tr>
+                            <tr>
+                                <th>Departure Hour:</th>
+                                <td>{{ features.hour }}:00</td>
+                                <th>Day of Week:</th>
+                                <td>
+                                    {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+                                    {{ days[features.day_of_week] }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="recommendations">
+                    <h3>Recommendations</h3>
+                    <ul>
+                        {% if prediction.delay > 30 %}
+                        <li>Consider adding a buffer of at least 45 minutes to your travel plans</li>
+                        <li>Check with the airline for real-time updates before heading to the airport</li>
+                        <li>Have backup plans for connecting flights if applicable</li>
+                        {% elif prediction.delay > 15 %}
+                        <li>Add a small buffer of 20-30 minutes to your travel plans</li>
+                        <li>Monitor flight status before departing for the airport</li>
+                        {% else %}
+                        <li>Standard travel preparations should be sufficient</li>
+                        <li>Flight is predicted to be on-time or have minimal delays</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025-26 | Flight Delay Prediction System | Bharati Vidyapeeth College of Engineering, Pune</p>
+            <p class="credit">Developed by: Sargam Chicholikar</p>
+        </footer>
+    </div>
+</body>
+</html>
