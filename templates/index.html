@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Delay Prediction System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flight Delay Prediction System</h1>
+            <p>Predict potential delays for your upcoming flight</p>
+        </header>
+
+        <main>
+            <section class="prediction-form">
+                <h2>Enter Flight Details</h2>
+                <form action="/predict" method="post">
+                    <div class="form-group">
+                        <label for="carrier">Airline Carrier:</label>
+                        <select id="carrier" name="carrier" required>
+                            <option value="" disabled selected>Select an airline</option>
+                            <option value="UA">United Airlines (UA)</option>
+                            <option value="AA">American Airlines (AA)</option>
+                            <option value="DL">Delta Air Lines (DL)</option>
+                            <option value="B6">JetBlue Airways (B6)</option>
+                            <option value="WN">Southwest Airlines (WN)</option>
+                            <option value="AS">Alaska Airlines (AS)</option>
+                            <option value="NK">Spirit Airlines (NK)</option>
+                            <option value="F9">Frontier Airlines (F9)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="origin">Origin Airport:</label>
+                        <select id="origin" name="origin" required>
+                            <option value="" disabled selected>Select origin airport</option>
+                            <option value="JFK">John F. Kennedy International (JFK)</option>
+                            <option value="LGA">LaGuardia Airport (LGA)</option>
+                            <option value="EWR">Newark Liberty International (EWR)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dest">Destination Airport:</label>
+                        <select id="dest" name="dest" required>
+                            <option value="" disabled selected>Select destination airport</option>
+                            <option value="ATL">Atlanta (ATL)</option>
+                            <option value="ORD">Chicago O'Hare (ORD)</option>
+                            <option value="LAX">Los Angeles (LAX)</option>
+                            <option value="DFW">Dallas/Fort Worth (DFW)</option>
+                            <option value="DEN">Denver (DEN)</option>
+                            <option value="SFO">San Francisco (SFO)</option>
+                            <option value="LAS">Las Vegas (LAS)</option>
+                            <option value="SEA">Seattle (SEA)</option>
+                            <option value="MIA">Miami (MIA)</option>
+                            <option value="BOS">Boston (BOS)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dep_datetime">Scheduled Departure:</label>
+                        <input type="datetime-local" id="dep_datetime" name="dep_datetime" required>
+                    </div>
+
+                    <div class="form-action">
+                        <button type="submit" class="btn-predict">Predict Delay</button>
+                        <button type="reset" class="btn-reset">Reset</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="info-section">
+                <h2>How It Works</h2>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-icon">📊</div>
+                        <h3>Data-Driven</h3>
+                        <p>Our model analyzes millions of historical flight records from NYC airports.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🧠</div>
+                        <h3>Machine Learning</h3>
+                        <p>We use Random Forest regression to predict delays with high accuracy.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">⏱️</div>
+                        <h3>Real-Time</h3>
+                        <p>Get instant predictions based on current flight conditions.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025-26 | Flight Delay Prediction System | Bharati Vidyapeeth College of Engineering, Pune</p>
+            <p class="credit">Developed by: Sargam Chicholikar</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set default date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+            document.getElementById('dep_datetime').value = defaultDateTime;
+        });
+    </script>
+</body>
+</html>
